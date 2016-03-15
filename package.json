@@ -4,7 +4,13 @@
   "description": "A tool to convert a js data structure to valid json",
   "main": "src/server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server/server.js",
+    "dev": "nodemon src/server/server.js",
+    "standard": "standard",
+    "test": "mocha spec/*.spec.js"
+  },
+  "engines": {
+    "node": ">=5.8.0"
   },
   "repository": {
     "type": "git",
@@ -21,5 +27,26 @@
   "bugs": {
     "url": "https://github.com/codeite/js2json/issues"
   },
-  "homepage": "https://github.com/codeite/js2json#readme"
+  "homepage": "https://github.com/codeite/js2json#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "must": "^0.13.1",
+    "nodemon": "^1.9.1",
+    "standard": "^5"
+  },
+  "standard": {
+    "globals": [
+      "it",
+      "describe",
+      "beforeEach",
+      "afterEach",
+      "before",
+      "after"
+    ]
+  }
 }
