@@ -4,7 +4,7 @@ const demand = require('must')
 
 const simpleJsParser = require('../src/server/simpleJsParser')
 
-describe('simpleJsParser', () => {
+describe('exaples', () => {
   it('example 1', () => {
     const text = `
     {
@@ -20,7 +20,7 @@ describe('simpleJsParser', () => {
       true: 'wibble'
     }
     `
-    demand(simpleJsParser.parse(text)).must.eql({
+    demand(simpleJsParser.parseJustObject(text)).must.eql({
       alpha: 1,
       beta: 'two',
       gamma: 'three',
@@ -49,6 +49,6 @@ describe('simpleJsParser', () => {
       true: 'wibble'
     }
     `
-    simpleJsParser.parse(text)
+    simpleJsParser.parseJustObject(text)
   })
 })

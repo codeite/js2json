@@ -1,7 +1,8 @@
 'use strict'
 
 module.exports = {
-  parse: parse
+  parse,
+  parseJustObject (str) { return parse(str).obj }
 }
 
 function parse (str) {
@@ -78,6 +79,7 @@ class Parser {
     switch (peek) {
       case `"`: return this.readString(`"`)
       case `'`: return this.readString(`'`)
+      case '`': return this.readBacktickString()
       case `[`: return this.readArray()
       case `{`: return this.readObject()
       default: if (this.isStartOfNumber()) {
@@ -108,6 +110,20 @@ class Parser {
 
     return str
   }
+  readBacktickString () {
+    let str = ''
+    this.read('`')
+    while (this.peek !== '`') {
+      if (this.peek === '\\') {
+        str += this.readEscapeCode('`')
+      } else {
+        str += this.read()
+      }
+    }
+    this.read('`')
+
+    return str
+  }
   readEscapeCode (quoteType) {
     this.read('\\')
     switch (this.peek) {
@@ -122,7 +138,9 @@ class Parser {
       case `r`: this.read(); return `\r`
       case `t`: this.read(); return `\t`
       case `u`: this.read(); return this.readUnicode()
-      default: throw this.raiseError(`Unknown escape code: »${this.peek}«`)
+      case '\r': this.read(); return ''
+      case '\n': this.read(); return '\n'
+      default: throw this.raiseError(`Unknown escape code: »${this.peek}« (0x${('00' + this.peek.charCodeAt(0).toString(16)).substr(-2)})`)
     }
   }
   readUnicode () {
