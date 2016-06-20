@@ -10,7 +10,7 @@
     "test": "mocha spec/*.spec.js"
   },
   "engines": {
-    "node": ">=5.8.0"
+    "node": ">=6"
   },
   "repository": {
     "type": "git",
