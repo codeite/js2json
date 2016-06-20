@@ -6,7 +6,8 @@ const exphbs = require('express-handlebars')
 
 const simpleJsParser = require('./simpleJsParser')
 
-const port = process.env.PORT || 8088
+let port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8088
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || null
 
 const app = express()
 app.use(bodyParser.urlencoded({
@@ -47,7 +48,7 @@ app.post('*', (req, res) => {
   res.render('index', vm)
 })
 
-app.listen(port, err => {
-  if (err) console.error('Could not listen on port ' + port)
-  else console.log('I\'m listening, fire your js at port ' + port)
+app.listen(port, ipaddress, err => {
+  if (err) console.error(`Could not listen on ${ipaddress}:${port}`)
+  else console.log(`I'm listening, fire your js at ${ipaddress}:${port}`)
 })
